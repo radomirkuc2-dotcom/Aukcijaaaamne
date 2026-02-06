@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>eAukcija.me - SAKRIVENI GAZDA</title>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <style>
+        :root { --p:#6C5CE7; --s:#00D9FF; --a:#FF3366; --ok:#00E396; --vip:#FFD700; --bg:#0A0E27; --c:#141829; --txt:#FFFFFF; --brd:#2A3150; }
+        * { box-sizing: border-box; margin:0; padding:0; font-family:'Outfit', sans-serif; -webkit-tap-highlight-color:transparent; }
+        body { background:var(--bg); color:var(--txt); overflow-x:hidden; }
+        .mix-txt { background:linear-gradient(90deg, var(--a), var(--s)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:800; }
+        
+        #splash { position: fixed; inset: 0; background: #0A0E27; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px; transition: 0.8s; }
+        header { background:var(--c); padding:12px 15px; display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--p); position:sticky; top:0; z-index:2000; }
+        .auth-btns { display:flex; gap:8px; }
+        .auth-box { padding:6px 12px; border:1px solid var(--s); border-radius:8px; font-size:11px; font-weight:800; color:var(--s); cursor:pointer; text-transform:uppercase; }
+        .app-container { padding:15px; padding-bottom:80px; max-width:600px; margin: 0 auto; }
+        .card { background:var(--c); border-radius:22px; padding:18px; border: 1px solid var(--brd); margin-bottom:15px; position:relative; }
+        input, textarea, select { width:100%; padding:14px; margin-bottom:10px; border-radius:12px; border: 1px solid var(--brd); background:#000; color:#fff; font-size:16px; outline:none; }
+        .btn { width:100%; padding:14px; border-radius:12px; border:none; font-weight:800; cursor:pointer; text-align:center; color:white; display:block; }
+        .btn-p { background:var(--p); } .btn-s { background:var(--s); color:#000; }
+        #sidebar { position:fixed; top:0; left:-280px; width:280px; height:100%; background:var(--c); z-index:9000; transition:0.3s; padding:30px; border-right:3px solid var(--p); }
+        #sidebar.active { left: 0; }
+        .menu-item { display:block; padding:15px 0; border-bottom:1px solid var(--brd); color:#FFF; font-weight:700; cursor:pointer; }
+        #overlay { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:none; z-index:8500; }
+        .admin-msg { background: #000; padding: 10px; border-radius: 10px; border-left: 3px solid var(--a); margin-bottom: 10px; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+    <div id="splash">
+        <h1 class="mix-txt" style="font-size: 2rem;">Dobrodošli u prvu aukcijsku platformu u Crnoj Gori</h1>
+        <p style="color: var(--s); margin-top: 10px;">eAukcija.me 🇲🇪</p>
+    </div>
+
+    <header>
+        <div onclick="toggleMenu()" style="font-size: 30px; color: var(--p); cursor: pointer;">☰</div>
+        <div class="mix-txt" style="font-size: 1.2rem;">eAukcija.me</div>
+        <div class="auth-btns">
+            <div class="auth-box" onclick="showAuth('login')">Log in</div>
+            <div class="auth-box" onclick="showAuth('reg')">Reg</div>
+        </div>
+    </header>
+
+    <div id="sidebar">
+        <h2 class="mix-txt" style="margin-bottom:20px;">MENI</h2>
+        <div class="menu-item" onclick="showSec('feed')">🔨 Aukcije</div>
+        <div class="menu-item" onclick="showSec('nagrade')">🏆 Nagrade</div>
+        <div class="menu-item" onclick="showSec('paketi')">💎 VIP & Premium</div>
+        <div class="menu-item" onclick="showSec('don')">💰 Donacije</div>
+        <div class="menu-item" onclick="showSec('sug')">💡 Sugestije</div>
+    </div>
+
+    <div id="overlay" onclick="toggleMenu()"></div>
+
+    <div class="app-container">
+        
+        <!-- PRETRAGA (OVDE KUCAŠ ŠIFRU ZA GAZDU) -->
+        <input type="text" id="srch" onkeyup="checkGazda(this.value)" placeholder="🔍 Pretraži oglase..." style="border-color:var(--s); background:#000;">
+
+        <div id="sec-feed">
+            <div class="card" style="border: 1px solid var(--vip);">
+                <div style="background:var(--vip); color:#000; font-size:10px; font-weight:900; padding:2px 6px; border-radius:4px; float:right;">VIP</div>
+                <div><strong>Nikola_PG</strong> ✅</div>
+                <div style="background:#111; height:180px; border-radius:15px; margin:10px 0;"></div>
+                <h2 class="mix-txt">Golf 7 GTI - Podgorica</h2>
+                <div style="font-size:24px; font-weight:800; color:var(--p);">14,500 €</div>
+                <button class="btn btn-p" style="margin-top:10px;">LICITIRAJ</button>
+            </div>
+        </div>
+
+        <!-- SAKRIVENI GAZDA PANEL -->
+        <div id="sec-admin" style="display:none;" class="card">
+            <h2 class="mix-txt" style="color:var(--a)">🛠️ GAZDA PANEL (TAJNO)</h2>
+            <p style="margin:10px 0;">Primjedbe i chatovi:</p>
+            <div class="admin-msg"><strong>Korisnik1:</strong> Brate, spuštaj cijenu!</div>
+            <div class="admin-msg"><strong>Korisnik2:</strong> Hoću verifikaciju ✅</div>
+            <button class="btn btn-a" style="background:var(--a);" onclick="showSec('feed')">ZATVORI PANEL</button>
+        </div>
+
+        <div id="sec-auth" style="display:none;" class="card">
+            <h2 class="mix-txt" id="auth-title">PRIJAVA</h2>
+            <div id="reg-fields" style="display:none; margin-top:10px;">
+                <input type="text" placeholder="Ime i Prezime">
+                <input type="text" placeholder="Grad">
+            </div>
+            <input type="email" placeholder="E-mail">
+            <input type="password" placeholder="Lozinka">
+            <button class="btn btn-p" onclick="alert('Dobrodošli!')">POTVRDI</button>
+        </div>
+
+        <div id="sec-nagrade" style="display:none;" class="card"><h2 class="mix-txt">🏆 NAGRADE</h2><p>Pobjednik dobija VIP!</p></div>
+        <div id="sec-paketi" style="display:none;" class="card"><h2>💎 VIP 30€ | PREMIUM 10€</h2></div>
+        <div id="sec-don" style="display:none;" class="card"><h2>💰 DONACIJE</h2><button class="btn btn-s">WISE KARTICA</button></div>
+        <div id="sec-sug" style="display:none;" class="card"><h2>💡 SUGESTIJE</h2><textarea placeholder="Piši gazdi..."></textarea></div>
+
+    </div>
+
+    <script>
+        setTimeout(() => { document.getElementById('splash').style.display = 'none'; }, 2500);
+
+        function toggleMenu() {
+            const s = document.getElementById('sidebar');
+            const o = document.getElementById('overlay');
+            s.classList.toggle('active');
+            o.style.display = s.classList.contains('active') ? 'block' : 'none';
+        }
+
+        // --- TAJNA ŠIFRA ZA GAZDU ---
+        function checkGazda(val) {
+            // UKUCAJ 'GAZDA123' U PRETRAGU DA OTVORIŠ PANEL
+            if(val.toUpperCase() === 'GAZDA123') {
+                showSec('admin');
+                document.getElementById('srch').value = ""; // Briše šifru da se ne vidi
+                alert("Dobrodošao Gazda!");
+            } else {
+                // Obična pretraga
+                let cards = document.querySelectorAll('.card');
+                cards.forEach(c => { c.style.display = c.innerText.toUpperCase().includes(val.toUpperCase()) ? "" : "none"; });
+            }
+        }
+
+        function showAuth(mode) {
+            showSec('auth');
+            document.getElementById('auth-title').innerText = mode === 'reg' ? "REGISTRACIJA" : "PRIJAVA";
+            document.getElementById('reg-fields').style.display = mode === 'reg' ? "block" : "none";
+        }
+
+        function showSec(id) {
+            ['sec-feed','sec-auth','sec-nagrade','sec-paketi','sec-don','sec-sug','sec-admin'].forEach(s => {
+                document.getElementById(s).style.display = 'none';
+            });
+            document.getElementById('sec-' + id).style.display = 'block';
+            if(document.getElementById('sidebar').classList.contains('active')) toggleMenu();
+        }
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Snake Game</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="game-container">
+		<canvas id="gc" class="game-canvas" width="400" height="400"></canvas>
+	</div>
+	<div class="keys">
+	  <a class="up arr" onclick="Snake.action('up')">
+	    <i class="chevron up"></i></a>
+	  <br />
+	  <a class="left arr" onclick="Snake.action('left')">
+	    <i class="chevron left"></i></a>
+	  <a class="down arr" onclick="Snake.action('down')">
+	    <i class="chevron down"></i></a>
+	  <a class="right arr" onclick="Snake.action('right')">
+	    <i class="chevron right"></i></a>
+	</div>
+	<script type="text/javascript" src="game.js"></script>
+</body>
+</html>
