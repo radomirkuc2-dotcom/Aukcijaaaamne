@@ -1,39 +1,3 @@
-        </div>
-
-        <div id="sec-nagrade" style="display:none;" class="card"><h2 class="mix-txt">🏆 NAGRADE</h2><p>Licitiraj i osvoji.</p></div>
-        <div id="sec-paketi" style="display:none;" class="card"><h2>💎 PAKETI</h2></div>
-        <div id="sec-don" style="display:none;" class="card"><h2>💰 PODRŠKA</h2></div>
-        <div id="sec-sug" style="display:none;" class="card"><h2>💡 IDEJE</h2><textarea placeholder="Vaša sugestija..."></textarea></div>
-    </div>
-
-    <script>
-        // Splash traje 3 sekunde da bi ljudi stigli da pročitaju dobrodošlicu
-        setTimeout(() => { document.getElementById('splash').style.opacity = '0'; }, 2500);
-        setTimeout(() => { document.getElementById('splash').style.display = 'none'; }, 3500);
-
-        function toggleMenu() {
-            const s = document.getElementById('sidebar');
-            const o = document.getElementById('overlay');
-            s.classList.toggle('active');
-            o.style.display = s.classList.contains('active') ? 'block' : 'none';
-        }
-
-        function checkGazda(val) {
-            if(val.toUpperCase() === 'GAZDA123') {
-                showSec('admin');
-                document.getElementById('srch').value = ""; 
-                alert("Sistem otključan!");
-            } else {
-                let cards = document.querySelectorAll('.card');
-                cards.forEach(c => { 
-                    if(c.id !== "sec-admin") {
-                        c.style.display = c.innerText.toUpperCase().includes(val.toUpperCase()) ? "" : "none"; 
-                    }
-                });
-            }
-        }
-
-        function showAuth(mode) {
             showSec('auth');
             document.getElementById('auth-title').innerText = mode === 'reg' ? "REGISTRACIJA" : "PRIJAVA";
             document.getElementById('reg-fields').style.display = mode === 'reg' ? "block" : "none";
