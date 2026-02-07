@@ -1,63 +1,89 @@
-            showSec('auth');
-            document.getElementById('auth-title').innerText = mode === 'reg' ? "REGISTRACIJA" : "PRIJAVA";
-            document.getElementById('reg-fields').style.display = mode === 'reg' ? "block" : "none";
-        }
-
-        function showSec(id) {
-            ['sec-feed','sec-auth','sec-nagrade','sec-paketi','sec-don','sec-sug','sec-admin'].forEach(s => {
-                let el = document.getElementById(s);
-                if(el) el.style.display = 'none';
-            });
-            let target = document.getElementById('sec-' + id);
-            if(target) target.style.display = 'block';
-            if(document.getElementById('sidebar').classList.contains('active')) toggleMenu();
-        }
-    </script>
-</body>
-</html>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Snake Game</title>
-	<link rel="stylesheet" href="style.css">
+  <title>Vaša PWA Aplikacija</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Ako imate još CSS fajlova, dodajte ih ovde -->
 </head>
 <body>
-	<div id="game-container">
-		<canvas id="gc" class="game-canvas" width="400" height="400"></canvas>
-	</div>
-	<div class="keys">
-	  <a class="up arr" onclick="Snake.action('up')">
-	    <i class="chevron up"></i></a>
-	  <br />
-	  <a class="left arr" onclick="Snake.action('left')">
-	    <i class="chevron left"></i></a>
-	  <a class="down arr" onclick="Snake.action('down')">
-	    <i class="chevron down"></i></a>
-	  <a class="right arr" onclick="Snake.action('right')">
-	    <i class="chevron right"></i></a>
-	</div>
-	<script type="text/javascript" src="game.js"></script>// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+  <!-- Deo HTML-a za PWA aplikaciju (registracija/prijava, feed itd.) -->
+  <!-- Pretpostavljam da ovi elementi postoje u vašem originalnom HTML-u -->
+  <div id="sec-auth">
+    <h2 id="auth-title"></h2>
+    <div id="reg-fields" style="display: none;">
+      <!-- Ovde idu polja za registraciju -->
+    </div>
+    <!-- Ostali elementi za autentifikaciju -->
+  </div>
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyAlY_gfT-ksePjevyFC_Tsyngi4Jr9rVmo",
-  authDomain: "eaukcija.firebaseapp.com",
-  projectId: "eaukcija",
-  storageBucket: "eaukcija.firebasestorage.app",
-  messagingSenderId: "623742586953",
-  appId: "1:623742586953:web:bee8794504f0289e4a2f98",
-  measurementId: "G-WMVHTCMDS3"
-};
+  <div id="sec-feed" style="display: none;">
+    <!-- Sadržaj feed-a -->
+  </div>
+  <!-- ...ostale sekcije kao što su sec-nagrade, sec-paketi, itd. -->
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+  <div id="game-container">
+    <canvas id="gc" class="game-canvas" width="400" height="400"></canvas>
+  </div>
+  <div class="keys">
+    <a class="up arr" onclick="Snake.action('up')">
+      <i class="chevron up"></i></a>
+    <br />
+    <a class="left arr" onclick="Snake.action('left')">
+      <i class="chevron left"></i></a>
+    <a class="down arr" onclick="Snake.action('down')">
+      <i class="chevron down"></i></a>
+    <a class="right arr" onclick="Snake.action('right')">
+      <i class="chevron right"></i></a>
+  </div>
+
+  <!-- Uključivanje JavaScript fajlova -->
+  <script type="text/javascript" src="game.js"></script>
+
+  <!-- Vaš JavaScript kod za upravljanje sekcijama i menijem -->
+  <script type="text/javascript">
+    function showAuthSec(mode) {
+      showSec('auth');
+      document.getElementById('auth-title').innerText = mode === 'reg' ? "REGISTRACIJA" : "PRIJAVA";
+      document.getElementById('reg-fields').style.display = mode === 'reg' ? "block" : "none";
+    }
+
+    function showSec(id) {
+      ['sec-feed','sec-auth','sec-nagrade','sec-paketi','sec-don','sec-sug','sec-admin'].forEach(s => {
+        let el = document.getElementById(s);
+        if(el) el.style.display = 'none';
+      });
+      let target = document.getElementById('sec-' + id);
+      if(target) target.style.display = 'block';
+      // Pretpostavljam da imate funkciju toggleMenu() i element sidebar
+      // if(document.getElementById('sidebar') && document.getElementById('sidebar').classList.contains('active')) toggleMenu();
+    }
+  </script>
+
+  <!-- Firebase inicijalizacija (koristimo type="module" zbog import izjava) -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "firebase/app";
+    import { getAnalytics } from "firebase/analytics";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyAlY_gfT-ksePjevyFC_Tsyngi4Jr9rVmo",
+      authDomain: "eaukcija.firebaseapp.com",
+      projectId: "eaukcija",
+      storageBucket: "eaukcija.firebasestorage.app",
+      messagingSenderId: "623742586953",
+      appId: "1:623742586953:web:bee8794504f0289e4a2f98",
+      measurementId: "G-WMVHTCMDS3"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
 </body>
 </html>
